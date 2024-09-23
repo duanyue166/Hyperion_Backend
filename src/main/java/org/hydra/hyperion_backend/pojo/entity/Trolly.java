@@ -4,12 +4,10 @@ package org.hydra.hyperion_backend.pojo.entity;
 import lombok.Data;
 
 @Data
-public class SoldGoods {
+public class Trolly {
 
-    private long orderId;
+    private long userId;
     private long goodsId;
     private long quantity;
-    private double unitPrice;
-    private long review;
 
 }
