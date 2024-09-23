@@ -10,7 +10,11 @@ public class Order {
 
     private long id;
     private long userId;
+    /*
+    *   订单状态 : PLACED CONFIRMED SHIPPED COMPLETE
+     */
     private String state;
+
     private double payment;
     private String consignee;
     private String contact;
