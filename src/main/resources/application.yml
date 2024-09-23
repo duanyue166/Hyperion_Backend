@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Hyperion_Backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://duanyue.top:3306/hyperion?allowLoadLocalInfile=true
+    username: root
+    password: asd
