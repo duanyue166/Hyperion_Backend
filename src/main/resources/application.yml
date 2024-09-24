@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: dev
   application:
     name: Hyperion_Backend
   servlet:

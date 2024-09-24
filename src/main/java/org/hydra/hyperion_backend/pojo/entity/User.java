@@ -8,7 +8,6 @@ import java.util.Date;
 
 @Data
 public class User {
-
     private long id;
     private String tel;
     private String name;
@@ -17,5 +16,4 @@ public class User {
     private String email;
     private String state;
     private Date lastLogin;
-
 }
