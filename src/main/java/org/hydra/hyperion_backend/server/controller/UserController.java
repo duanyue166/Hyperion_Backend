@@ -1,5 +1,6 @@
 package org.hydra.hyperion_backend.server.controller;
 
+import org.hydra.hyperion_backend.pojo.dto.UserLoginRequest;
 import org.hydra.hyperion_backend.pojo.dto.UserRegisterRequest;
 import org.hydra.hyperion_backend.pojo.vo.Result;
 import org.hydra.hyperion_backend.server.service.UserService;
@@ -18,5 +19,10 @@ public class UserController {
     @PostMapping("/register")
     public Result register(@RequestBody @Validated UserRegisterRequest request) {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody @Validated UserLoginRequest request) {
+        return userService.login(request);
     }
 }

@@ -1,4 +1,4 @@
-package org.hydra.hyperion_backend.pojo.handler;
+package org.hydra.hyperion_backend.handler;
 
 import org.hydra.hyperion_backend.pojo.vo.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
