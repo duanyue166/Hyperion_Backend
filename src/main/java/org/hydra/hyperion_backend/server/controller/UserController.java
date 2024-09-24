@@ -23,6 +23,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> register(@RequestBody UserRegisterDTO userRegisterDTO) {
         UserVo userVO = userService.registerUser(userRegisterDTO);
         Map<String, Object> response = new HashMap<>();
+        //need to
         response.put("code", 0);
         response.put("msg", "Success");
         response.put("data", userVO);
