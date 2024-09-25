@@ -5,6 +5,7 @@ import org.hydra.hyperion_backend.pojo.dto.UserLoginRequest;
 import org.hydra.hyperion_backend.pojo.dto.UserRegisterRequest;
 import org.hydra.hyperion_backend.pojo.entity.User;
 import org.hydra.hyperion_backend.pojo.vo.Result;
+import org.hydra.hyperion_backend.pojo.vo.UserVo;
 import org.hydra.hyperion_backend.server.mapper.UserMapper;
 import org.hydra.hyperion_backend.util.JwtUtil;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
@@ -44,6 +45,8 @@ public class UserService {
         var claim = Map.of("userId", userId, "loginUser", loginUser);
         ThreadLocalUtil.set(claim);
         String jwt = JwtUtil.genToken(Map.of("userId", userId));
-        return Result.success(jwt);
+        UserVo userVo = UserVo.builder().name(loginUser.getUser().getName()).tel(loginUser.getUser().getTel())
+                .role(loginUser.getRole()).token(jwt).build();
+        return Result.success(userVo);
     }
 }

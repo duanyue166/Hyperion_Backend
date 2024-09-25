@@ -27,6 +27,10 @@ public class LoginUser implements UserDetails {
         return user.getPass();
     }
 
+    public String getRole() {
+        return user.getRole();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -46,6 +50,8 @@ public class LoginUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

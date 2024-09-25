@@ -11,9 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVo {
-    private String username;
+    private String name;
     private String tel;
-    private String email;
-    private String password;
     private String role;
+    private String token;
 }
