@@ -44,9 +44,15 @@ public class UserService {
         Long userId = loginUser.getUser().getId();
         var claim = Map.of("userId", userId, "loginUser", loginUser);
         ThreadLocalUtil.set(claim);
+
+        User user = loginUser.getUser();
         String jwt = JwtUtil.genToken(Map.of("userId", userId));
-        UserVo userVo = UserVo.builder().name(loginUser.getUser().getName()).tel(loginUser.getUser().getTel())
-                .role(loginUser.getRole()).token(jwt).build();
+        UserVo userVo = UserVo.builder()
+                .name(user.getName())
+                .tel(user.getTel())
+                .role(user.getRole())
+                .token(jwt)
+                .build();
         return Result.success(userVo);
     }
 }
