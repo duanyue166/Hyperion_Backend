@@ -19,7 +19,7 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getTel();
+        return user.getTel() + "," + user.getRole();
     }
 
     @Override

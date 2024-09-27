@@ -19,5 +19,5 @@ Content-Type: application/json
 {
   "tel": "13045678913",
   "pass": "462ab506377df2508aed2bea7e2662aa",
-  "role": "CONSUMER"
+  "role": "ADMIN"
 }

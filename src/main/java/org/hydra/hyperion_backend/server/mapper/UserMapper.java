@@ -12,9 +12,11 @@ public interface UserMapper {
             "values (#{tel}, #{name}, #{pass}, #{role}, #{email}, 'ACTIVE')")
     void register(UserRegisterRequest request);
 
-    @Select("select * from user where tel = #{tel}")
-    User findByTel(String tel);
+    @Select("select * from user " +
+            "where tel = #{tel} and role=#{role}")
+    User findByTelRole(String tel, String role);
 
-    @Select("select * from user where id = #{userId}")
+    @Select("select * from user " +
+            "where id = #{userId}")
     User findById(int userId);
 }

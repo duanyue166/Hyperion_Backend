@@ -29,16 +29,17 @@ public class UserService {
     AuthenticationManager authenticationManager;
 
     public Result register(UserRegisterRequest request) {
-        User user = userMapper.findByTel(request.getTel());
+        User user = userMapper.findByTelRole(request.getTel(), request.getRole());
         if (user != null)
-            return Result.error("手机号码已被注册");
+            return Result.error("手机号码已被注册该角色");
         request.setPass(passwordEncoder.encode(request.getPass()));
         userMapper.register(request);
         return Result.success("注册成功");
     }
 
     public Result login(UserLoginRequest request) {
-        var token = new UsernamePasswordAuthenticationToken(request.getTel(), request.getPass());
+        String tel_role = request.getTel() + "," + request.getRole();
+        var token = new UsernamePasswordAuthenticationToken(tel_role, request.getPass());
         Authentication authentication = authenticationManager.authenticate(token);
         var loginUser = (LoginUser) authentication.getPrincipal();
         Long userId = loginUser.getUser().getId();

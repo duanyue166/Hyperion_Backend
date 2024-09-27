@@ -3,6 +3,7 @@ package org.hydra.hyperion_backend.pojo.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hydra.hyperion_backend.annotation.ValidRegexp;
+import org.hydra.hyperion_backend.annotation.ValidState;
 
 @Data
 public class UserLoginRequest {
@@ -11,4 +12,7 @@ public class UserLoginRequest {
 
     @NotNull
     String pass;
+
+    @ValidState(states = {"ADMIN", "CONSUMER", "MERCHANT"})
+    String role;
 }
