@@ -13,7 +13,7 @@ public class UserRegisterRequest {
     @ValidRegexp(type = "username", message = "invalid username")
     private String name;
 
-    @ValidRegexp(type = "password", message = "invalid password")
+//    @ValidRegexp(type = "password", message = "invalid password")
     private String pass;
 
     @ValidState(states = {"ADMIN", "CONSUMER", "MERCHANT"})
