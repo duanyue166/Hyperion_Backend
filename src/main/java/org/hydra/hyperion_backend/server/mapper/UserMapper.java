@@ -3,6 +3,8 @@ package org.hydra.hyperion_backend.server.mapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.hydra.hyperion_backend.pojo.dto.UserChangeRequest;
 import org.hydra.hyperion_backend.pojo.dto.UserRegisterRequest;
 import org.hydra.hyperion_backend.pojo.entity.User;
 
@@ -19,4 +21,9 @@ public interface UserMapper {
     @Select("select * from user " +
             "where id = #{userId}")
     User findById(int userId);
+
+    @Update("update user " +
+            "set name=#{name}, tel=#{tel}, email=#{email} " +
+            "where id=#{id}")
+    void change(UserChangeRequest request);
 }

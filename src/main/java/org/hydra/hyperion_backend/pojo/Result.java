@@ -1,4 +1,4 @@
-package org.hydra.hyperion_backend.pojo.vo;
+package org.hydra.hyperion_backend.pojo;
 
 
 //统一响应结果
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result<T> {
-    private Integer code;//业务状态码  0-成功  1-失败
+    private Integer code;//业务状态码  =0:成功  <0:失败
     private String message;//提示信息
     private T data;//响应数据
 
@@ -27,5 +27,9 @@ public class Result<T> {
 
     public static Result error(String message) {
         return new Result(1, message, null);
+    }
+
+    public static Result error(Integer code, String message) {
+        return new Result(code, message, null);
     }
 }
