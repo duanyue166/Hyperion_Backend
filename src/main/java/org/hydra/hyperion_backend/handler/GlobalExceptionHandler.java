@@ -1,6 +1,6 @@
 package org.hydra.hyperion_backend.handler;
 
-import org.hydra.hyperion_backend.pojo.vo.Result;
+import org.hydra.hyperion_backend.pojo.Result;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

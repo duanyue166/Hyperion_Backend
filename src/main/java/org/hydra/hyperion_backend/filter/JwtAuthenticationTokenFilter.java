@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.hydra.hyperion_backend.pojo.LoginUser;
 import org.hydra.hyperion_backend.server.mapper.UserMapper;
 import org.hydra.hyperion_backend.util.JwtUtil;
+import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +34,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (token != null && token.startsWith("Bearer ")) {
             var claim = JwtUtil.parseToken(token.substring(7));
             var userId = (int) claim.get("userId");
+
+            ThreadLocalUtil.set(userId);
 
             /*
              * 从数据库中获取userId对应的用户信息
