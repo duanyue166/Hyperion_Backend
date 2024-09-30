@@ -26,8 +26,7 @@ public class TrolleyService {
         return Result.success(res);
     }
 
-    public Result delete(Integer goodsId) {
-        int userId=ThreadLocalUtil.get();
+    public Result delete(Integer userId, Integer goodsId) {
         trolleyMapper.delete(userId, goodsId);
         return Result.success();
     }

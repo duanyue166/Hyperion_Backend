@@ -24,7 +24,7 @@ public class TrolleyController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(Integer goodsId) {
-        return trolleyService.delete(goodsId);
+    public Result delete(Integer userId, Integer goodsId) {
+        return trolleyService.delete(userId, goodsId);
     }
 }
