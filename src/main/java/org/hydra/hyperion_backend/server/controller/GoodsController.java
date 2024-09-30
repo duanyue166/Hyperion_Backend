@@ -62,7 +62,10 @@ public class GoodsController {
     }
 
     @GetMapping("/list")
-    public Result list() {
-        return Result.success();
+    public Result list(
+            Integer pageSize,
+            Integer pageNum) {
+        var pageBean = goodsService.list(pageSize, pageNum);
+        return Result.success(pageBean);
     }
 }

@@ -55,7 +55,13 @@ public class GoodsService {
 
     public PageBean<Goods> listAll(Integer pageSize, Integer pageNum, String category) {
         PageHelper.startPage(pageNum, pageSize);
-        var page = (Page<Goods>) goodsMapper.list(category);
+        var page = (Page<Goods>) goodsMapper.listAll(category);
+        return new PageBean<>(page.getTotal(), page.getResult());
+    }
+
+    public PageBean<Goods> list(Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        var page = (Page<Goods>) goodsMapper.list(ThreadLocalUtil.get());
         return new PageBean<>(page.getTotal(), page.getResult());
     }
 }
