@@ -37,4 +37,9 @@ public class AddressController {
     public Result update(@RequestBody @Validated(AddressRequest.Update.class) AddressRequest request) {
         return addressService.update(request);
     }
+
+    @DeleteMapping("/delete")
+    public Result delete(Integer id) {
+        return addressService.delete(id);
+    }
 }

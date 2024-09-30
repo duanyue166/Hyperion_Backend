@@ -27,7 +27,7 @@ public interface AddressMapper {
             "FROM " +
             "    address a " +
             "WHERE " +
-            "    a.id = #{id}")
+            "    a.id = #{id} and a.state='ACTIVE'")
     AddressDetailVo detail(Integer id);
 
     @Select("SELECT  " +
@@ -39,7 +39,7 @@ public interface AddressMapper {
             "FROM  " +
             "    address a " +
             "WHERE  " +
-            "    a.user_id = #{userId}")
+            "    a.user_id = #{userId} and a.state='ACTIVE'")
     List<AddressListItemVo> list(int userId);
 
     void setDefault(int userId, int id);
@@ -48,4 +48,9 @@ public interface AddressMapper {
             "set prov_id = #{provId}, city_id = #{cityId}, dist_id = #{distId}, detail = #{detail} " +
             "where id = #{id} and user_id=#{userId}")
     void update(AddressRequest request);
+
+    @Update("update address " +
+            "set state = 'DELETED' " +
+            "where id=#{id} and user_id = #{userId}")
+    void delete(int userId, Integer id);
 }

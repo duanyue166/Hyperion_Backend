@@ -43,4 +43,10 @@ public class AddressService {
         addressMapper.update(request);
         return Result.success();
     }
+
+    public Result delete(Integer id) {
+        int userId = ThreadLocalUtil.get();
+        addressMapper.delete(userId, id);
+        return Result.success();
+    }
 }
