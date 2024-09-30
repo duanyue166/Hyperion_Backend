@@ -1,6 +1,5 @@
 package org.hydra.hyperion_backend.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -26,7 +25,6 @@ public class GoodsRequest {
      * 封面图片url
      */
     @URL
-    @JsonProperty("cover_url")
     private String coverUrl;
     /**
      * 商品描述

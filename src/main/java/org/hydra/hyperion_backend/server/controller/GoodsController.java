@@ -2,6 +2,7 @@ package org.hydra.hyperion_backend.server.controller;
 
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
+import org.hydra.hyperion_backend.pojo.entity.Goods;
 import org.hydra.hyperion_backend.server.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +36,7 @@ public class GoodsController {
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody GoodsRequest request) {
+    public Result update(@RequestBody @Validated GoodsRequest request) {
         System.out.println(request);
         return goodsService.update(request);
     }
@@ -43,5 +44,10 @@ public class GoodsController {
     @DeleteMapping("/delete")
     public Result delete(Integer id) {
         return goodsService.setState(id, "DELETED");
+    }
+
+    @GetMapping("/detail")
+    public Result detail(Integer id) {
+        return goodsService.detail(id);
     }
 }
