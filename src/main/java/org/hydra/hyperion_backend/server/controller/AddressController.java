@@ -18,12 +18,17 @@ public class AddressController {
     }
 
     @GetMapping("/detail")
-    public Result detail(Integer id){
+    public Result detail(Integer id) {
         return addressService.detail(id);
     }
 
     @GetMapping("/list")
-    public Result list(){
+    public Result list() {
         return addressService.list();
+    }
+
+    @PostMapping("/default")
+    public Result setDefault(Integer id) {
+        return addressService.setDefault(id);
     }
 }

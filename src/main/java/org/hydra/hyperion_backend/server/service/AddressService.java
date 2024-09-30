@@ -3,6 +3,7 @@ package org.hydra.hyperion_backend.server.service;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
+import org.hydra.hyperion_backend.server.mapper.AddressMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,11 @@ public class AddressService {
         int userId = ThreadLocalUtil.get();
         var res = addressMapper.list(userId);
         return Result.success(res);
+    }
+
+    public Result setDefault(Integer id) {
+        int userId = ThreadLocalUtil.get();
+        addressMapper.setDefault(userId, id);
+        return Result.success();
     }
 }

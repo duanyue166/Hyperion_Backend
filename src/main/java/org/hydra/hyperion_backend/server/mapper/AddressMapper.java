@@ -1,10 +1,9 @@
-package org.hydra.hyperion_backend.server.service;
+package org.hydra.hyperion_backend.server.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
-import org.hydra.hyperion_backend.pojo.entity.Address;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.AddressListItemVo;
 
@@ -41,4 +40,6 @@ public interface AddressMapper {
             "WHERE  " +
             "    a.user_id = #{userId}")
     List<AddressListItemVo> list(int userId);
+
+    void setDefault(int userId,int id);
 }
