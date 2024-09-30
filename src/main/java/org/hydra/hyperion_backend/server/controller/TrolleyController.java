@@ -1,7 +1,7 @@
 package org.hydra.hyperion_backend.server.controller;
 
 import org.hydra.hyperion_backend.pojo.Result;
-import org.hydra.hyperion_backend.pojo.dto.TrolleyAddRequest;
+import org.hydra.hyperion_backend.pojo.dto.TrolleyRequest;
 import org.hydra.hyperion_backend.server.mapper.TrolleyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +14,7 @@ public class TrolleyController {
     TrolleyService trolleyService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody @Validated TrolleyAddRequest request) {
+    public Result add(@RequestBody @Validated TrolleyRequest request) {
         return trolleyService.add(request);
     }
 
@@ -24,7 +24,12 @@ public class TrolleyController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(Integer userId, Integer goodsId) {
-        return trolleyService.delete(userId, goodsId);
+    public Result delete(Integer goodsId) {
+        return trolleyService.delete(goodsId);
+    }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody @Validated TrolleyRequest request) {
+        return trolleyService.update(request);
     }
 }

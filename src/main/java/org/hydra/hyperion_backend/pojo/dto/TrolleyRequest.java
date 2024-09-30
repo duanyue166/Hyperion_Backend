@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrolleyAddRequest {
+public class TrolleyRequest {
     @NotNull
     Integer id;
 
