@@ -3,7 +3,8 @@ package org.hydra.hyperion_backend.server.mapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
+import org.apache.ibatis.annotations.Update;
+import org.hydra.hyperion_backend.pojo.dto.AddressRequest;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.AddressListItemVo;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public interface AddressMapper {
     @Insert("insert into address (user_id, prov_id, city_id, dist_id, detail) " +
             "values (#{userId}, #{provId}, #{cityId}, #{distId}, #{detail})")
-    void add(AddressAddRequest request);
+    void add(AddressRequest request);
 
     @Select("SELECT " +
             "    (SELECT name FROM area WHERE id = a.prov_id) AS prov_name," +
@@ -41,5 +42,10 @@ public interface AddressMapper {
             "    a.user_id = #{userId}")
     List<AddressListItemVo> list(int userId);
 
-    void setDefault(int userId,int id);
+    void setDefault(int userId, int id);
+
+    @Update("update address " +
+            "set prov_id = #{provId}, city_id = #{cityId}, dist_id = #{distId}, detail = #{detail} " +
+            "where id = #{id} and user_id=#{userId}")
+    void update(AddressRequest request);
 }

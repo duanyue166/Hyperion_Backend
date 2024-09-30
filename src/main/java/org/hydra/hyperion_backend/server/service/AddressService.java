@@ -1,19 +1,21 @@
 package org.hydra.hyperion_backend.server.service;
 
 import org.hydra.hyperion_backend.pojo.Result;
-import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
+import org.hydra.hyperion_backend.pojo.dto.AddressRequest;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
 import org.hydra.hyperion_backend.server.mapper.AddressMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AddressService {
     @Autowired
     AddressMapper addressMapper;
 
-    public Result add(AddressAddRequest request) {
+    public Result add(AddressRequest request) {
         request.setUserId(ThreadLocalUtil.get());
         addressMapper.add(request);
         return Result.success();
@@ -33,6 +35,12 @@ public class AddressService {
     public Result setDefault(Integer id) {
         int userId = ThreadLocalUtil.get();
         addressMapper.setDefault(userId, id);
+        return Result.success();
+    }
+
+    public Result update(AddressRequest request) {
+        request.setUserId(ThreadLocalUtil.get());
+        addressMapper.update(request);
         return Result.success();
     }
 }

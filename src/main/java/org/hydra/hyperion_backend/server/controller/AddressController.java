@@ -1,9 +1,10 @@
 package org.hydra.hyperion_backend.server.controller;
 
 import org.hydra.hyperion_backend.pojo.Result;
-import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
+import org.hydra.hyperion_backend.pojo.dto.AddressRequest;
 import org.hydra.hyperion_backend.server.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +14,7 @@ public class AddressController {
     AddressService addressService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody AddressAddRequest request) {
+    public Result add(@RequestBody @Validated AddressRequest request) {
         return addressService.add(request);
     }
 
@@ -30,5 +31,10 @@ public class AddressController {
     @PostMapping("/default")
     public Result setDefault(Integer id) {
         return addressService.setDefault(id);
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody @Validated(AddressRequest.Update.class) AddressRequest request) {
+        return addressService.update(request);
     }
 }
