@@ -63,16 +63,4 @@ public class GoodsRequest {
 
     public interface Update {
     }
-
-    public GoodsRequest(Goods goods) {
-        this.category = goods.getCategory();
-        this.coverUrl = goods.getCoverUrl();
-        this.desc = goods.getDesc();
-        this.discount = goods.getDiscount();
-        this.name = goods.getName();
-        this.price = goods.getPrice();
-        this.quantity = goods.getQuantity();
-        this.userId = goods.getUserId();
-        this.id = goods.getId();
-    }
 }
