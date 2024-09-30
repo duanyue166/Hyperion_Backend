@@ -31,7 +31,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
          * 如果请求头中包含Authorization字段，且字段值以Bearer开头
          * 则解析token，获取其中的userId
          */
-        if (token != null && token.startsWith("Bearer ")) {
+        System.out.println(request.getRequestURI());
+        boolean isLogin = request.getRequestURI().equals("/user/login");
+        boolean isRegister = request.getRequestURI().equals("/user/register");
+        if (token != null && token.startsWith("Bearer ") && !isLogin && !isRegister) {
             var claim = JwtUtil.parseToken(token.substring(7));
             var userId = (int) claim.get("userId");
 
