@@ -26,17 +26,22 @@ public class GoodsController {
 
     @PutMapping("/onsale")
     public Result onsale(Integer id) {
-        return goodsService.setState(id, "ONSALE");
+        return goodsService.setSale(id, "ON");
     }
 
     @PutMapping("/offsale")
     public Result offsale(Integer id) {
-        return goodsService.setState(id, "OFFSALE");
+        return goodsService.setSale(id, "OFF");
     }
 
     @PostMapping("/update")
     public Result update(@RequestBody GoodsRequest request) {
         System.out.println(request);
         return goodsService.update(request);
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(Integer id) {
+        return goodsService.setState(id, "DELETED");
     }
 }

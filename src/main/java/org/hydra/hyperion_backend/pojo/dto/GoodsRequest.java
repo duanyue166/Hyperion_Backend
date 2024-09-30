@@ -56,11 +56,6 @@ public class GoodsRequest {
     @Min(0)
     private long quantity;
     /**
-     * 商品状态（正常、下架）
-     */
-    @ValidState(states = {"ONSALE", "OFFSALE"})
-    private String state;
-    /**
      * 商品的卖家编号
      */
     private long userId;
@@ -79,7 +74,6 @@ public class GoodsRequest {
         this.name = goods.getName();
         this.price = goods.getPrice();
         this.quantity = goods.getQuantity();
-        this.state = goods.getState();
         this.userId = goods.getUserId();
         this.id = goods.getId();
     }

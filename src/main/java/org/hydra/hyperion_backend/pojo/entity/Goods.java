@@ -10,6 +10,7 @@ public class Goods {
     private long userId;
     private String name;
     private String state;
+    private String sale;
     private String coverUrl;
     private String desc;
     private String category;

@@ -2,8 +2,8 @@ package org.hydra.hyperion_backend.server.service;
 
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
-import org.hydra.hyperion_backend.pojo.entity.Goods;
 import org.hydra.hyperion_backend.server.mapper.GoodsMapper;
+import org.hydra.hyperion_backend.server.mapper.UserMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class GoodsService {
     @Autowired
     GoodsMapper goodsMapper;
+    private UserMapper userMapper;
 
     public Result add(GoodsRequest request) {
         int userId = ThreadLocalUtil.get();
@@ -26,8 +27,8 @@ public class GoodsService {
         return Result.success();
     }
 
-    public Result setState(Integer id, String state) {
-        goodsMapper.setState(id, state);
+    public Result setSale(Integer id, String sale) {
+        goodsMapper.setSale(id, sale);
         return Result.success();
     }
 
@@ -35,6 +36,11 @@ public class GoodsService {
         int userId = ThreadLocalUtil.get();
         request.setUserId(userId);
         goodsMapper.update(request);
+        return Result.success();
+    }
+
+    public Result setState(Integer id, String state) {
+        goodsMapper.setState(id, state);
         return Result.success();
     }
 }
