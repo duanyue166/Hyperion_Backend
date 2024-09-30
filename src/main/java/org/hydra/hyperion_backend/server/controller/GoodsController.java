@@ -5,10 +5,7 @@ import org.hydra.hyperion_backend.pojo.dto.GoodsAddRequest;
 import org.hydra.hyperion_backend.server.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +21,16 @@ public class GoodsController {
 
     @PostMapping("/add")
     public Result add(@RequestBody @Validated GoodsAddRequest request) {
-        goodsService.add(request);
-        return Result.success();
+        return goodsService.add(request);
+    }
+
+    @PutMapping("/onsale")
+    public Result onsale(Integer id) {
+        return goodsService.setState(id, "ONSALE");
+    }
+
+    @PutMapping("/offsale")
+    public Result offsale(Integer id) {
+        return goodsService.setState(id, "OFFSALE");
     }
 }
