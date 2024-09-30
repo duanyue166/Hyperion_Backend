@@ -14,12 +14,17 @@ public class TrolleyController {
     TrolleyService trolleyService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody @Validated TrolleyAddRequest request){
+    public Result add(@RequestBody @Validated TrolleyAddRequest request) {
         return trolleyService.add(request);
     }
 
     @GetMapping("/list")
-    public Result list(){
+    public Result list() {
         return trolleyService.list();
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(Integer goodsId) {
+        return trolleyService.delete(goodsId);
     }
 }

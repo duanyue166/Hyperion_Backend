@@ -21,8 +21,14 @@ public class TrolleyService {
     }
 
     public Result list() {
-        int userId=ThreadLocalUtil.get();
-        List<TrolleyItemVo> res=trolleyMapper.list(userId);
+        int userId = ThreadLocalUtil.get();
+        List<TrolleyItemVo> res = trolleyMapper.list(userId);
         return Result.success(res);
+    }
+
+    public Result delete(Integer goodsId) {
+        int userId=ThreadLocalUtil.get();
+        trolleyMapper.delete(userId, goodsId);
+        return Result.success();
     }
 }
