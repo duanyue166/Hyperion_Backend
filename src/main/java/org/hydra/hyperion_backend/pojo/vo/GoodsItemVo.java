@@ -11,6 +11,6 @@ public class GoodsItemVo {
     private long totSales;
     private double price;
     private String coverUrl;
-    private long pCount;
-    private long nCount;
+    private long posCount;
+    private long negCount;
 }

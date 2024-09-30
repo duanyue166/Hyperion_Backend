@@ -130,3 +130,6 @@ ALTER TABLE goods
     ADD COLUMN sale ENUM('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
 
 ALTER TABLE goods MODIFY COLUMN sale ENUM('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
+
+ALTER TABLE goods CHANGE p_count pos_count INT UNSIGNED;
+ALTER TABLE goods CHANGE n_count neg_count INT UNSIGNED;
