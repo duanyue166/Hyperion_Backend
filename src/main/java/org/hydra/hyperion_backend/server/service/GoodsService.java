@@ -1,5 +1,8 @@
 package org.hydra.hyperion_backend.server.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.hydra.hyperion_backend.pojo.PageBean;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
@@ -48,5 +51,11 @@ public class GoodsService {
     public Result detail(Integer id) {
         Goods goods = goodsMapper.getById(id);
         return Result.success(goods);
+    }
+
+    public PageBean<Goods> listAll(Integer pageSize, Integer pageNum, String category) {
+        PageHelper.startPage(pageNum, pageSize);
+        var page = (Page<Goods>) goodsMapper.list(category);
+        return new PageBean<>(page.getTotal(), page.getResult());
     }
 }

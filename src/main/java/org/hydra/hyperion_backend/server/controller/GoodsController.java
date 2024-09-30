@@ -1,5 +1,6 @@
 package org.hydra.hyperion_backend.server.controller;
 
+import org.hydra.hyperion_backend.pojo.PageBean;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
@@ -49,5 +50,19 @@ public class GoodsController {
     @GetMapping("/detail")
     public Result detail(Integer id) {
         return goodsService.detail(id);
+    }
+
+    @GetMapping("/listAll")
+    public Result listAll(
+            Integer pageSize,
+            Integer pageNum,
+            @RequestParam(required = false) String category) {
+        var pageBean = goodsService.listAll(pageSize, pageNum, category);
+        return Result.success(pageBean);
+    }
+
+    @GetMapping("/list")
+    public Result list() {
+        return Result.success();
     }
 }

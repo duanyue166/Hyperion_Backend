@@ -7,10 +7,24 @@ import lombok.Data;
 @Data
 @Builder
 public class GoodsItemVo {
-    private String name;
-    private long totSales;
-    private double price;
+    /**
+     * 封面图片url
+     */
     private String coverUrl;
-    private long posCount;
-    private long negCount;
+    /**
+     * 折扣
+     */
+    private Double discount;
+    /**
+     * 商品唯一编号
+     */
+    private long id;
+    /**
+     * 商品名称
+     */
+    private String name;
+    /**
+     * 价格
+     */
+    private double price;
 }

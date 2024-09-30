@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.*;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * author： Shuowei Hou
@@ -36,4 +38,6 @@ public interface GoodsMapper {
             "set state=#{state} " +
             "where id=#{id}")
     void setState(Integer id, String state);
+
+    List<Goods> list(String category);
 }
