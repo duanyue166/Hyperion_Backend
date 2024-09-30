@@ -21,4 +21,9 @@ public class AddressController {
     public Result detail(Integer id){
         return addressService.detail(id);
     }
+
+    @GetMapping("/list")
+    public Result list(){
+        return addressService.list();
+    }
 }

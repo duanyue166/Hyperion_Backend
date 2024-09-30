@@ -5,7 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.hydra.hyperion_backend.pojo.dto.AddressAddRequest;
 import org.hydra.hyperion_backend.pojo.entity.Address;
-import org.hydra.hyperion_backend.pojo.vo.AddressVo;
+import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
+import org.hydra.hyperion_backend.pojo.vo.AddressListItemVo;
+
+import java.util.List;
 
 @Mapper
 public interface AddressMapper {
@@ -25,5 +28,17 @@ public interface AddressMapper {
             "    address a " +
             "WHERE " +
             "    a.id = #{id}")
-    AddressVo detail(Integer id);
+    AddressDetailVo detail(Integer id);
+
+    @Select("SELECT  " +
+            "    a.id, " +
+            "    CONCAT((SELECT name FROM area WHERE id = a.prov_id), '-', " +
+            "           (SELECT name FROM area WHERE id = a.city_id), '-', " +
+            "           (SELECT name FROM area WHERE id = a.dist_id)) AS district, " +
+            "    a.detail,a.is_default " +
+            "FROM  " +
+            "    address a " +
+            "WHERE  " +
+            "    a.user_id = #{userId}")
+    List<AddressListItemVo> list(int userId);
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressVo {
+public class AddressDetailVo {
     Integer Id;
     Integer provId;
     String provName;
