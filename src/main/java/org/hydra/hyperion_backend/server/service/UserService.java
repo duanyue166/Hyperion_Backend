@@ -44,9 +44,9 @@ public class UserService {
         var token = new UsernamePasswordAuthenticationToken(tel_role, request.getPass());
         Authentication authentication = authenticationManager.authenticate(token);
         var loginUser = (LoginUser) authentication.getPrincipal();
-        Long userId = loginUser.getUser().getId();
-
         User user = loginUser.getUser();
+        Long userId = user.getId();
+
         String jwt = JwtUtil.genToken(Map.of("userId", userId));
         var response = UserLoginResponse.builder()
                 .name(user.getName())
