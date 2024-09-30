@@ -1,7 +1,7 @@
 package org.hydra.hyperion_backend.server.service;
 
 import org.hydra.hyperion_backend.pojo.Result;
-import org.hydra.hyperion_backend.pojo.dto.GoodsAddRequest;
+import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
 import org.hydra.hyperion_backend.server.mapper.GoodsMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
@@ -19,7 +19,7 @@ public class GoodsService {
     @Autowired
     GoodsMapper goodsMapper;
 
-    public Result add(GoodsAddRequest request) {
+    public Result add(GoodsRequest request) {
         int userId = ThreadLocalUtil.get();
         request.setUserId(userId);
         goodsMapper.add(request);
@@ -27,9 +27,14 @@ public class GoodsService {
     }
 
     public Result setState(Integer id, String state) {
-        Goods goods = goodsMapper.getById(id);
-        goods.setState(state);
-        goodsMapper.update(goods);
+        goodsMapper.setState(id, state);
+        return Result.success();
+    }
+
+    public Result update(GoodsRequest request) {
+        int userId = ThreadLocalUtil.get();
+        request.setUserId(userId);
+        goodsMapper.update(request);
         return Result.success();
     }
 }

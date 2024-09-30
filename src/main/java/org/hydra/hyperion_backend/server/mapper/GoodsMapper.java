@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.hydra.hyperion_backend.pojo.dto.GoodsAddRequest;
+import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
 
 /**
@@ -18,7 +18,7 @@ public interface GoodsMapper {
 
     @Insert("insert into goods (category, cover_url, `desc`, discount, name, price, quantity, state, user_id) " +
             "values (#{category}, #{coverUrl}, #{desc}, #{discount}, #{name}, #{price}, #{quantity}, #{state}, #{userId})")
-    void add(GoodsAddRequest request);
+    void add(GoodsRequest request);
 
     @Select("select * from goods " +
             "where id=#{id}")
@@ -26,7 +26,12 @@ public interface GoodsMapper {
 
     @Update("update goods " +
             "set category=#{category}, cover_url=#{coverUrl}, `desc`=#{desc}, discount=#{discount}," +
-            "   name=#{name}, price=#{price}, quantity=#{quantity}, state=#{state} " +
+            "   name=#{name}, price=#{price}, quantity=#{quantity} " +
             "where id=#{id}")
-    void update(Goods goods);
+    void update(GoodsRequest request);
+
+    @Update("update goods " +
+            "set state=#{state} " +
+            "where id=#{id}")
+    void setState(Integer id, String state);
 }

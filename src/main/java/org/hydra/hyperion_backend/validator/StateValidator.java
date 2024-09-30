@@ -25,6 +25,6 @@ public class StateValidator implements ConstraintValidator<ValidState, String> {
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return states.contains(s);
+        return s == null || s.isEmpty() || states.contains(s);
     }
 }

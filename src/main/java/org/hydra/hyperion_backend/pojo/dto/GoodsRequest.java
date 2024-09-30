@@ -1,5 +1,6 @@
 package org.hydra.hyperion_backend.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -10,11 +11,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 import org.hydra.hyperion_backend.annotation.ValidState;
+import org.hydra.hyperion_backend.pojo.entity.Goods;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GoodsAddRequest {
+public class GoodsRequest {
     /**
      * 商品分类
      */
@@ -24,6 +26,7 @@ public class GoodsAddRequest {
      * 封面图片url
      */
     @URL
+    @JsonProperty("cover_url")
     private String coverUrl;
     /**
      * 商品描述
@@ -61,4 +64,23 @@ public class GoodsAddRequest {
      * 商品的卖家编号
      */
     private long userId;
+
+    @NotNull(groups = {Update.class})
+    private long id;
+
+    public interface Update {
+    }
+
+    public GoodsRequest(Goods goods) {
+        this.category = goods.getCategory();
+        this.coverUrl = goods.getCoverUrl();
+        this.desc = goods.getDesc();
+        this.discount = goods.getDiscount();
+        this.name = goods.getName();
+        this.price = goods.getPrice();
+        this.quantity = goods.getQuantity();
+        this.state = goods.getState();
+        this.userId = goods.getUserId();
+        this.id = goods.getId();
+    }
 }
