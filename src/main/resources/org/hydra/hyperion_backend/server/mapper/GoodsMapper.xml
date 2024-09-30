@@ -10,6 +10,9 @@
             <if test="category!=null">
                 category like concat('%',#{category},'%')
             </if>
+            <if test="keyword!=null">
+                and name like concat('%',#{keyword},'%')
+            </if>
         </where>
     </select>
 </mapper>

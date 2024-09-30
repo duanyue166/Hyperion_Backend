@@ -39,7 +39,7 @@ public interface GoodsMapper {
             "where id=#{id}")
     void setState(Integer id, String state);
 
-    List<Goods> listAll(String category);
+    List<Goods> listAll(String keyword, String category);
 
     @Select("select * from goods " +
             "where user_id=#{userId}")

@@ -56,8 +56,9 @@ public class GoodsController {
     public Result listAll(
             Integer pageSize,
             Integer pageNum,
+            @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String category) {
-        var pageBean = goodsService.listAll(pageSize, pageNum, category);
+        var pageBean = goodsService.listAll(pageSize, pageNum, keyword, category);
         return Result.success(pageBean);
     }
 
