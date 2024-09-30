@@ -1,0 +1,64 @@
+package org.hydra.hyperion_backend.pojo.dto;
+
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
+import org.hydra.hyperion_backend.annotation.ValidState;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class GoodsAddRequest {
+    /**
+     * 商品分类
+     */
+    @Length(max = 10)
+    private String category;
+    /**
+     * 封面图片url
+     */
+    @URL
+    private String coverUrl;
+    /**
+     * 商品描述
+     */
+    private String desc;
+    /**
+     * 折扣
+     */
+    @DecimalMin("0.0")
+    @DecimalMax("1.0")
+    private Double discount;
+    /**
+     * 商品名称
+     */
+    @NotNull
+    private String name;
+    /**
+     * 价格
+     */
+    @NotNull
+    @Min(0)
+    private double price;
+    /**
+     * 库存数量
+     */
+    @NotNull
+    @Min(0)
+    private long quantity;
+    /**
+     * 商品状态（正常、下架）
+     */
+    @ValidState(states = {"ONSALE", "OFFSALE"})
+    private String state;
+    /**
+     * 商品的卖家编号
+     */
+    private long userId;
+}
