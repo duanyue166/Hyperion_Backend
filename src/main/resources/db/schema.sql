@@ -133,3 +133,5 @@ ALTER TABLE goods MODIFY COLUMN sale ENUM('ON', 'OFF') NOT NULL DEFAULT 'OFF' CO
 
 ALTER TABLE goods CHANGE p_count pos_count INT UNSIGNED;
 ALTER TABLE goods CHANGE n_count neg_count INT UNSIGNED;
+
+ALTER TABLE trolly RENAME TO trolley;
