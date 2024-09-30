@@ -1,0 +1,380 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Hyperion API",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "tags": [
+        {
+            "name": "Area"
+        },
+        {
+            "name": "User"
+        },
+        {
+            "name": "Goods"
+        },
+        {
+            "name": "Address"
+        },
+        {
+            "name": "Order"
+        },
+        {
+            "name": "Trolly"
+        },
+        {
+            "name": "SoldGoods"
+        }
+    ],
+    "paths": {},
+    "components": {
+        "schemas": {
+            "Area": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "行政区划编码"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "行政区划名称"
+                    },
+                    "type": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "类型（1：省，2：市，3：区（县））"
+                    },
+                    "parentId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "父级行政区划编码"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "type"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "用户ID"
+                    },
+                    "tel": {
+                        "type": "string",
+                        "description": "手机号，登录凭据"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "用户名，昵称"
+                    },
+                    "pass": {
+                        "type": "string",
+                        "description": "登录密码"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "ADMIN",
+                            "CONSUMER",
+                            "MERCHANT"
+                        ],
+                        "description": "账户类型（管理员、买家、卖家）"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "电子邮件"
+                    },
+                    "state": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "FROZEN",
+                            "DELETED"
+                        ],
+                        "description": "账户状态（正常、冻结、删除）"
+                    },
+                    "lastLogin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "最后登录时间"
+                    }
+                },
+                "required": [
+                    "id",
+                    "tel",
+                    "name",
+                    "pass",
+                    "role",
+                    "state"
+                ]
+            },
+            "Goods": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "商品唯一编号"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "商品的卖家编号"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "商品名称"
+                    },
+                    "state": {
+                        "type": "string",
+                        "enum": [
+                            "ONSALE",
+                            "OFFSALE"
+                        ],
+                        "description": "商品状态（正常、下架）"
+                    },
+                    "coverUrl": {
+                        "type": "string",
+                        "description": "封面图片url"
+                    },
+                    "desc": {
+                        "type": "string",
+                        "description": "商品描述"
+                    },
+                    "category": {
+                        "type": "string",
+                        "description": "商品分类"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "价格"
+                    },
+                    "discount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "折扣"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "库存数量"
+                    },
+                    "totSales": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "总销量"
+                    },
+                    "pCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "好评数量"
+                    },
+                    "nCount": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "差评数量"
+                    }
+                },
+                "required": [
+                    "id",
+                    "userId",
+                    "name",
+                    "state",
+                    "price",
+                    "quantity"
+                ]
+            },
+            "Address": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "地址唯一编号"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "所属用户编号"
+                    },
+                    "provId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "省份编号"
+                    },
+                    "cityId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "城市编号"
+                    },
+                    "distId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "区（县）编号"
+                    },
+                    "detail": {
+                        "type": "string",
+                        "description": "详细地址"
+                    },
+                    "isDefault": {
+                        "type": "boolean",
+                        "description": "是否为默认地址（0：否）"
+                    },
+                    "state": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIVE",
+                            "DELETED"
+                        ],
+                        "description": "状态（正常，删除）"
+                    }
+                },
+                "required": [
+                    "id",
+                    "userId",
+                    "provId",
+                    "cityId",
+                    "distId",
+                    "detail",
+                    "isDefault",
+                    "state"
+                ]
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "订单ID"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "下单用户编号"
+                    },
+                    "state": {
+                        "type": "string",
+                        "enum": [
+                            "PLACED",
+                            "CONFIRMED",
+                            "SHIPPED",
+                            "COMPLETE"
+                        ],
+                        "description": "订单状态（待付款，待发货，待收货，完成）"
+                    },
+                    "payment": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "实付款"
+                    },
+                    "consignee": {
+                        "type": "string",
+                        "description": "收货人"
+                    },
+                    "contact": {
+                        "type": "string",
+                        "description": "收货人联系电话"
+                    },
+                    "address": {
+                        "type": "string",
+                        "description": "收获完整详细地址"
+                    },
+                    "createTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "订单创建时间"
+                    },
+                    "completeTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "订单完成（签收）时间"
+                    }
+                },
+                "required": [
+                    "id",
+                    "userId",
+                    "state",
+                    "payment",
+                    "consignee",
+                    "contact",
+                    "address",
+                    "createTime"
+                ]
+            },
+            "Trolly": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "购物车所属用户编号"
+                    },
+                    "goodsId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "商品编号"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "商品添加数量"
+                    }
+                },
+                "required": [
+                    "userId",
+                    "goodsId",
+                    "quantity"
+                ]
+            },
+            "SoldGoods": {
+                "type": "object",
+                "properties": {
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "订单编号"
+                    },
+                    "goodsId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "货物编号"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "售出数量"
+                    },
+                    "unitPrice": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "成交单价"
+                    },
+                    "review": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "评价"
+                    }
+                },
+                "required": [
+                    "orderId",
+                    "goodsId",
+                    "quantity",
+                    "unitPrice"
+                ]
+            }
+        },
+        "securitySchemes": {}
+    },
+    "servers": []
+}

@@ -1,0 +1,367 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "大型分布式高并发微服务之线上交易系统 API 接口文档",
+      "description": "本文档用于描述线上交易系统后端 API 接口规范，旨在帮助前端开发者快速理解接口功能并进行开发。",
+      "version": "1.0.0"
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "用户ID编号"
+            },
+            "name": {
+              "type": "string",
+              "description": "用户名"
+            },
+            "tel": {
+              "type": "string",
+              "description": "电话号码"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "邮箱地址"
+            },
+            "state": {
+              "type": "string",
+              "description": "用户状态",
+              "enum": [
+                "ACTIVE",
+                "DELETED"
+              ]
+            },
+            "last_login": {
+              "type": "string",
+              "format": "date-time",
+              "description": "上次登录时间"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "tel",
+            "email",
+            "state",
+            "last_login"
+          ]
+        },
+        "Merchant": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "商家ID编号"
+            },
+            "name": {
+              "type": "string",
+              "description": "商家名称"
+            },
+            "tel": {
+              "type": "string",
+              "description": "电话号码"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "邮箱地址"
+            },
+            "state": {
+              "type": "string",
+              "description": "商家状态",
+              "enum": [
+                "ACTIVE",
+                "DELETED"
+              ]
+            },
+            "last_login": {
+              "type": "string",
+              "format": "date-time",
+              "description": "上次登录时间"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "tel",
+            "email",
+            "state",
+            "last_login"
+          ]
+        },
+        "Order": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "订单ID编号"
+            },
+            "con_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "用户ID编号"
+            },
+            "mer_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "商家ID编号"
+            },
+            "good_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "商品ID编号"
+            },
+            "state": {
+              "type": "string",
+              "description": "订单状态",
+              "enum": [
+                "PLACED",
+                "CONFIRMED",
+                "SHIPPED",
+                "COMPLETE",
+                "CANCELED"
+              ]
+            },
+            "payment": {
+              "type": "number",
+              "format": "double",
+              "description": "支付金额"
+            },
+            "consignee": {
+              "type": "string",
+              "description": "收货人"
+            },
+            "contact": {
+              "type": "string",
+              "description": "联系电话"
+            },
+            "address": {
+              "type": "string",
+              "description": "收货地址"
+            },
+            "create_time": {
+              "type": "string",
+              "format": "date-time",
+              "description": "创建时间"
+            },
+            "complete_time": {
+              "type": "string",
+              "format": "date-time",
+              "description": "完成时间"
+            },
+            "cover_url": {
+              "type": "string",
+              "format": "url",
+              "description": "商品封面链接"
+            },
+            "name": {
+              "type": "string",
+              "description": "商品名称"
+            }
+          },
+          "required": [
+            "id",
+            "con_id",
+            "mer_id",
+            "good_id",
+            "state",
+            "payment",
+            "consignee",
+            "contact",
+            "address",
+            "create_time",
+            "complete_time",
+            "cover_url",
+            "name"
+          ]
+        },
+        "Good": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "商品ID编号"
+            },
+            "name": {
+              "type": "string",
+              "description": "商品名称"
+            },
+            "cover_url": {
+              "type": "string",
+              "format": "url",
+              "description": "商品封面链接"
+            },
+            "desc": {
+              "type": "string",
+              "description": "商品描述"
+            },
+            "category": {
+              "type": "string",
+              "description": "商品类别"
+            },
+            "price": {
+              "type": "number",
+              "format": "double",
+              "description": "商品价格"
+            },
+            "discount": {
+              "type": "number",
+              "format": "double",
+              "description": "折扣"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "库存数量"
+            },
+            "tot_sales": {
+              "type": "integer",
+              "description": "总销量"
+            },
+            "state": {
+              "type": "string",
+              "description": "商品状态",
+              "enum": [
+                "ONSALE",
+                "OFFSALE"
+              ]
+            },
+            "p_count": {
+              "type": "integer",
+              "description": "库存数量"
+            },
+            "n_count": {
+              "type": "integer",
+              "description": "已售数量"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "cover_url",
+            "desc",
+            "category",
+            "price",
+            "discount",
+            "quantity",
+            "tot_sales",
+            "state",
+            "p_count",
+            "n_count"
+          ]
+        },
+        "TrollyItem": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "用户ID编号"
+            },
+            "goods_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "商品ID编号"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "数量"
+            },
+            "price": {
+              "type": "number",
+              "format": "double",
+              "description": "商品价格"
+            },
+            "discount": {
+              "type": "number",
+              "format": "double",
+              "description": "折扣"
+            },
+            "cover_url": {
+              "type": "string",
+              "format": "url",
+              "description": "商品封面链接"
+            },
+            "name": {
+              "type": "string",
+              "description": "商品名称"
+            }
+          },
+          "required": [
+            "user_id",
+            "goods_id",
+            "quantity",
+            "price",
+            "discount",
+            "cover_url",
+            "name"
+          ]
+        },
+        "Address": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "地址ID编号"
+            },
+            "user_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "用户ID编号"
+            },
+            "prov_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "省份代码"
+            },
+            "city_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "城市代码"
+            },
+            "dist_id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "区县代码"
+            },
+            "detail": {
+              "type": "string",
+              "description": "详细地址"
+            },
+            "is_default": {
+              "type": "boolean",
+              "description": "是否为默认地址"
+            },
+            "state": {
+              "type": "string",
+              "description": "地址状态",
+              "enum": [
+                "ACTIVE",
+                "DELETED"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "user_id",
+            "prov_id",
+            "city_id",
+            "dist_id",
+            "detail",
+            "is_default",
+            "state"
+          ]
+        }
+      },
+      "securitySchemes": {}
+    },
+    "servers": []
+  }
