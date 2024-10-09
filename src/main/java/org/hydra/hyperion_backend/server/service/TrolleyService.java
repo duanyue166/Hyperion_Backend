@@ -7,10 +7,12 @@ import org.hydra.hyperion_backend.server.mapper.TrolleyMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class TrolleyService {
     @Autowired
     TrolleyMapper trolleyMapper;

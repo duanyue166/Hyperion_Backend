@@ -11,6 +11,7 @@ import org.hydra.hyperion_backend.server.mapper.UserMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
  * description：
  */
 @Service
+@Transactional
 public class GoodsService {
     @Autowired
     GoodsMapper goodsMapper;

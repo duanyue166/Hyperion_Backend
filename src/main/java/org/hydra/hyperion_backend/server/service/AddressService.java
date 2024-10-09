@@ -7,10 +7,12 @@ import org.hydra.hyperion_backend.server.mapper.AddressMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
+@Transactional
 public class AddressService {
     @Autowired
     AddressMapper addressMapper;
