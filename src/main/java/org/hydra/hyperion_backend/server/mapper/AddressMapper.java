@@ -12,8 +12,8 @@ import java.util.List;
 
 @Mapper
 public interface AddressMapper {
-    @Insert("insert into address (user_id, prov_id, city_id, dist_id, detail) " +
-            "values (#{userId}, #{provId}, #{cityId}, #{distId}, #{detail})")
+    @Insert("insert into address (user_id, prov_id, city_id, dist_id,consignee,contact, detail) " +
+            "values (#{userId}, #{provId}, #{cityId}, #{distId},#{consignee},#{contact}, #{detail})")
     void add(AddressRequest request);
 
     @Select("SELECT " +
@@ -22,7 +22,7 @@ public interface AddressMapper {
             "    (SELECT name FROM area WHERE id = a.city_id) AS city_name," +
             "    a.city_id," +
             "    (SELECT name FROM area WHERE id = a.dist_id) AS dist_name," +
-            "    a.dist_id," +
+            "    a.dist_id, a.consignee, a.contact, " +
             "    a.detail,a.is_default,a.id " +
             "FROM " +
             "    address a " +
@@ -35,7 +35,7 @@ public interface AddressMapper {
             "    CONCAT((SELECT name FROM area WHERE id = a.prov_id), '-', " +
             "           (SELECT name FROM area WHERE id = a.city_id), '-', " +
             "           (SELECT name FROM area WHERE id = a.dist_id)) AS district, " +
-            "    a.detail,a.is_default " +
+            "    a.detail, a.consignee, a.contact, a.is_default " +
             "FROM  " +
             "    address a " +
             "WHERE  " +
@@ -45,7 +45,8 @@ public interface AddressMapper {
     void setDefault(int userId, int id);
 
     @Update("update address " +
-            "set prov_id = #{provId}, city_id = #{cityId}, dist_id = #{distId}, detail = #{detail} " +
+            "set prov_id = #{provId}, city_id = #{cityId}, dist_id = #{distId}, detail = #{detail}, " +
+            "   consignee = #{consignee}, contact = #{contact} " +
             "where id = #{id} and user_id=#{userId}")
     void update(AddressRequest request);
 

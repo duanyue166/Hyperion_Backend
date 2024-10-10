@@ -11,5 +11,7 @@ public class AddressListItemVo {
     Integer id;
     String district;
     String detail;
+    String consignee;
+    String contact;
     Integer isDefault;
 }

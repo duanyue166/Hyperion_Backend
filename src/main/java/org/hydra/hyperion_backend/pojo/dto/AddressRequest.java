@@ -1,9 +1,11 @@
 package org.hydra.hyperion_backend.pojo.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hydra.hyperion_backend.annotation.ValidRegexp;
 
 @Data
 @AllArgsConstructor
@@ -29,6 +31,19 @@ public class AddressRequest {
      */
     @NotNull
     private Integer provId;
+
+    /**
+     * 收获人姓名
+     */
+    @NotNull
+    private String consignee;
+
+    /**
+     * 收货人联系电话
+     */
+    @NotNull
+    @ValidRegexp(type = "tel")
+    private String contact;
     /**
      * 用户 ID
      */
@@ -37,6 +52,6 @@ public class AddressRequest {
     @NotNull(groups = {AddressRequest.Update.class})
     private long id;
 
-    public interface Update {
+    public interface Update extends Default {
     }
 }

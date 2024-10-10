@@ -16,5 +16,7 @@ public class AddressDetailVo {
     Integer distId;
     String distName;
     String detail;
+    String consignee;
+    String contact;
     Integer isDefault;
 }

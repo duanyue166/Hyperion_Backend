@@ -121,17 +121,31 @@ CREATE TABLE sold_goods
 
 COMMIT;
 
-ALTER TABLE user MODIFY COLUMN pass VARCHAR(255);
+ALTER TABLE user
+    MODIFY COLUMN pass VARCHAR(255);
 
-DELETE FROM goods WHERE 1=1;
+DELETE
+FROM goods
+WHERE 1 = 1;
 
 ALTER TABLE goods
-    MODIFY COLUMN state ENUM('ACTIVE', 'DELETED') NOT NULL COMMENT '商品状态（正常、删除）',
-    ADD COLUMN sale ENUM('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
+    MODIFY COLUMN state ENUM ('ACTIVE', 'DELETED') NOT NULL COMMENT '商品状态（正常、删除）',
+    ADD COLUMN sale ENUM ('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
 
-ALTER TABLE goods MODIFY COLUMN sale ENUM('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
+ALTER TABLE goods
+    MODIFY COLUMN sale ENUM ('ON', 'OFF') NOT NULL DEFAULT 'OFF' COMMENT '销售状态（开启、关闭）';
 
-ALTER TABLE goods CHANGE p_count pos_count INT UNSIGNED;
-ALTER TABLE goods CHANGE n_count neg_count INT UNSIGNED;
+ALTER TABLE goods
+    CHANGE p_count pos_count INT UNSIGNED;
+ALTER TABLE goods
+    CHANGE n_count neg_count INT UNSIGNED;
 
 ALTER TABLE trolly RENAME TO trolley;
+
+ALTER TABLE address
+    ADD COLUMN consignee VARCHAR(20) COMMENT '收货人姓名',
+    ADD COLUMN contact   VARCHAR(20) COMMENT '收货人联系电话';
+
+ALTER TABLE address
+    MODIFY COLUMN consignee VARCHAR(20) NOT NULL COMMENT '收货人姓名',
+    MODIFY COLUMN contact VARCHAR(20) NOT NULL COMMENT '收货人联系电话';
