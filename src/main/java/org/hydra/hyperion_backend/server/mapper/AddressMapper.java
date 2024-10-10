@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.hydra.hyperion_backend.pojo.dto.AddressRequest;
+import org.hydra.hyperion_backend.pojo.entity.Address;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.AddressListItemVo;
 
@@ -54,4 +55,8 @@ public interface AddressMapper {
             "set state = 'DELETED' " +
             "where id=#{id} and user_id = #{userId}")
     void delete(int userId, Integer id);
+
+    @Select("select * from address " +
+            "where user_id = #{userId} and id = #{addrId}")
+    Address getById(Integer userId, Integer addrId);
 }
