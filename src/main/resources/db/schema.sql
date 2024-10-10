@@ -149,3 +149,6 @@ ALTER TABLE address
 ALTER TABLE address
     MODIFY COLUMN consignee VARCHAR(20) NOT NULL COMMENT '收货人姓名',
     MODIFY COLUMN contact VARCHAR(20) NOT NULL COMMENT '收货人联系电话';
+
+ALTER TABLE `order`
+    ADD COLUMN cover_url VARCHAR(2083) COMMENT '订单封面';
