@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hydra.hyperion_backend.server.mapper.OrderMapper">
+    <insert id="addSoldGoods">
+        insert into sold_goods (order_id, goods_id, quantity, unit_price)
+        values
+        <foreach collection='soldGoodsDetails' item='item' separator=','>
+            (#{orderId}, #{item.goodsId}, #{item.quantity}, #{item.price}*#{item.discount})
+        </foreach>
+    </insert>
+
+    <select id="getSoldGoodsDetails" resultType="org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo">
+        select g.id      as goods_id,
+               t.quantity,
+               g.user_id as mer_id,
+               g.cover_url,
+               g.price,
+               g.discount
+        from trolley t
+                 join goods g
+                      on t.goods_id = g.id
+        where t.user_id = #{userId}
+          and t.goods_id in
+        <foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
+            #{goodsId}
+        </foreach>
+    </select>
+</mapper>

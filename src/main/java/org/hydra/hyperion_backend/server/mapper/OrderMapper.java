@@ -1,23 +1,19 @@
 package org.hydra.hyperion_backend.server.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
+import org.hydra.hyperion_backend.pojo.entity.Order;
+import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 
 import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-    @Insert("insert into sold_goods(order_id, goods_id, quantity, unit_price) " +
-            "select null, t.goods_id, t.quantity, g.price * g.discount " +
-            "from trolley t " +
-            "   join goods g on t.goods_id = g.id " +
-            "where t.user_id = #{userid} and t.goods_id in (#{goodsidlist});")
-    void insertSoldGoods(Integer userId, List<Integer> goodsIdList,int a);
+    List<SoldGoodsDetailVo> getSoldGoodsDetails(Integer userId, @Param("goodsIdList") List<Integer> goodsIdList);
 
-    @Insert("insert into sold_goods(order_id, goods_id, quantity, unit_price) " +
-            "select o.id,   " +
-            "from user u join trolley t on u.id=t.user_id " +
-            " s.order_id in #{orderIdList} " +
-            "group by s.goods_id;")
-    void insertSoldGoods(Integer userId, List<Integer> orderIdList);
+    @Insert("insert into `order`(con_id, mer_id, state, payment, consignee, contact, address, create_time ,cover_url) " +
+            "values(#{conId}, #{merId}, #{state}, #{payment}, #{consignee}, #{contact}, #{address}, now(),#{coverUrl});")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void addOrder(Order order);
+
+    void addSoldGoods(Integer orderId, @Param("soldGoodsDetails") List<SoldGoodsDetailVo> soldGoodsDetails);
 }
