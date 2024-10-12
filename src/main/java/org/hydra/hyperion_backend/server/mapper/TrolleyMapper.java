@@ -12,7 +12,7 @@ public interface TrolleyMapper {
             "values (#{userId}, #{id}, #{quantity})")
     void add(TrolleyRequest request);
 
-    @Select("select g.id, t.quantity, g.price, g.discount, g.cover_url, g.name " +
+    @Select("select g.id, t.quantity, g.price, g.discount, g.cover_url, g.name, g.state " +
             "from trolley t join goods g on t.goods_id=g.id " +
             "where t.user_id=#{userId}")
     List<TrolleyItemVo> list(int userId);

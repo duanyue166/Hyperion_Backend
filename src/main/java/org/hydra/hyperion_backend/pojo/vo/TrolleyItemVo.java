@@ -14,4 +14,5 @@ public class TrolleyItemVo {
     double discount;
     String coverUrl;
     String name;
+    String state;
 }
