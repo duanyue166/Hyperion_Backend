@@ -16,4 +16,6 @@ public interface OrderMapper {
     void addOrder(Order order);
 
     void addSoldGoods(Integer orderId, @Param("soldGoodsDetails") List<SoldGoodsDetailVo> soldGoodsDetails);
+
+    void deleteTrolley(Integer userId,@Param("goodsIdList") List<Integer> goodsIdList);
 }

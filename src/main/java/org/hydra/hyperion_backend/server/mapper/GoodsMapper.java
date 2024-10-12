@@ -3,8 +3,11 @@ package org.hydra.hyperion_backend.server.mapper;
 import org.apache.ibatis.annotations.*;
 import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
+import org.hydra.hyperion_backend.pojo.vo.GoodsDetailVo;
+import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,4 +47,6 @@ public interface GoodsMapper {
     @Select("select * from goods " +
             "where user_id=#{userId}")
     List<Goods> list(Integer userId);
+
+    void decreaseQuantity(@Param("soldGoodsDetails") List<SoldGoodsDetailVo> soldGoodsDetails);
 }

@@ -22,9 +22,19 @@
                  join goods g
                       on t.goods_id = g.id
         where t.user_id = #{userId}
+          and g.state = 'ACTIVE'
           and t.goods_id in
         <foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
             #{goodsId}
         </foreach>
     </select>
+    
+    <delete id="deleteTrolley">
+        delete from trolley
+        where user_id = #{userId}
+        and goods_id in
+        <foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
+            #{goodsId}
+        </foreach>
+    </delete>
 </mapper>

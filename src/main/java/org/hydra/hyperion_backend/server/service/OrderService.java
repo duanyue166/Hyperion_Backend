@@ -2,11 +2,11 @@ package org.hydra.hyperion_backend.server.service;
 
 
 import org.hydra.hyperion_backend.pojo.Result;
-import org.hydra.hyperion_backend.pojo.entity.Address;
 import org.hydra.hyperion_backend.pojo.entity.Order;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 import org.hydra.hyperion_backend.server.mapper.AddressMapper;
+import org.hydra.hyperion_backend.server.mapper.GoodsMapper;
 import org.hydra.hyperion_backend.server.mapper.OrderMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,10 @@ public class OrderService {
     OrderMapper orderMapper;
     @Autowired
     AddressMapper addressMapper;
+    @Autowired
+    GoodsService goodsService;
+    @Autowired
+    private GoodsMapper goodsMapper;
 
     public Result add(Integer addrId, List<Integer> goodsIdList) {
         int userId = ThreadLocalUtil.get();
@@ -74,6 +78,12 @@ public class OrderService {
         Integer orderId = (int) order.getId();
         orderMapper.addSoldGoods(orderId, soldGoodsDetails);
         System.out.println("SoldGoods added: " + soldGoodsDetails);
+
+        //delete trolley items
+        List<Integer> goodsIdList = soldGoodsDetails.stream()
+                .map(SoldGoodsDetailVo::getGoodsId)
+                .toList();
+        orderMapper.deleteTrolley(userId, goodsIdList);
     }
 
     private String generateCover(List<SoldGoodsDetailVo> soldGoodsDetails) {

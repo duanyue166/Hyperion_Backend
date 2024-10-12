@@ -15,4 +15,12 @@
             </if>
         </where>
     </select>
+
+    <update id="decreaseQuantity">
+        <foreach collection="soldGoodsDetails" item="item" separator=";">
+            update goods
+            set quantity = quantity - #{item.quantity}
+            where id = #{item.goodsId}
+        </foreach>
+    </update>
 </mapper>
