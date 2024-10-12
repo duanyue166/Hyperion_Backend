@@ -1,9 +1,13 @@
 package org.hydra.hyperion_backend.server.service;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import org.hydra.hyperion_backend.pojo.PageBean;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.entity.Order;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
+import org.hydra.hyperion_backend.pojo.vo.OrderListItemVo;
 import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 import org.hydra.hyperion_backend.server.mapper.AddressMapper;
 import org.hydra.hyperion_backend.server.mapper.GoodsMapper;
@@ -89,5 +93,46 @@ public class OrderService {
     private String generateCover(List<SoldGoodsDetailVo> soldGoodsDetails) {
         //TODO: implement this
         return soldGoodsDetails.get(0).getCoverUrl();///temp
+    }
+
+    public Result pay(Integer orderId) {
+        int userId = ThreadLocalUtil.get();
+        orderMapper.updateState(userId, orderId, "CONFIRMED");
+        return Result.success();
+    }
+
+    public Result cList(Integer pageSize, Integer pageNum, String state) {
+        int userId = ThreadLocalUtil.get();
+        PageHelper.startPage(pageNum, pageSize);
+        var page = (Page<OrderListItemVo>) orderMapper.cList(userId, state);
+        PageBean<OrderListItemVo> pageBean = new PageBean<>(page.getTotal(), page.getResult());
+        return Result.success(pageBean);
+    }
+
+    public Result mList(Integer pageSize, Integer pageNum, String state) {
+        int userId = ThreadLocalUtil.get();
+        PageHelper.startPage(pageNum, pageSize);
+        var page = (Page<OrderListItemVo>) orderMapper.mList(userId, state);
+        PageBean<OrderListItemVo> pageBean = new PageBean<>(page.getTotal(), page.getResult());
+        return Result.success(pageBean);
+    }
+
+    public Result ship(Integer orderId) {
+        //TODO: check goods quantity
+        int userId = ThreadLocalUtil.get();
+        orderMapper.updateState(userId, orderId, "SHIPPED");
+        return Result.success();
+    }
+
+    public Result receive(Integer orderId) {
+        //TODO: update goods total sales
+        int userId = ThreadLocalUtil.get();
+        orderMapper.updateState(userId, orderId, "COMPLETE");
+        return Result.success();
+    }
+
+    public Result review(Integer orderId, Integer goodsId, Integer score) {
+        orderMapper.review(orderId, goodsId, score);
+        return Result.success();
     }
 }

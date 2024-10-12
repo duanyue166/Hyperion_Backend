@@ -37,4 +37,57 @@
             #{goodsId}
         </foreach>
     </delete>
+
+    <select id="cList" resultType="org.hydra.hyperion_backend.pojo.vo.OrderListItemVo">
+        select id, state, create_time, payment, cover_url
+        from `order`
+        where con_id = #{userId}
+        <if test="state != null">
+            and state = #{state}
+        </if>
+    </select>
+
+    <select id="mList" resultType="org.hydra.hyperion_backend.pojo.vo.OrderListItemVo">
+        select id, state, create_time, payment, cover_url
+        from `order`
+        where mer_id = #{userId}
+        <if test="state != null">
+            and state = #{state}
+        </if>
+    </select>
+
+    <update id="updateState">
+        update `order`
+        set state = #{state}
+        where id = #{orderId}
+        <if test='state == "CONFIRMED"'>
+            and state = 'PLACED' and con_id = #{userId}
+        </if>
+        <if test='state == "SHIPPED"'>
+            and state = 'CONFIRMED' and mer_id = #{userId}
+        </if>
+        <if test='state == "COMPLETE"'>
+            and state = 'SHIPPED' and con_id = #{userId}
+        </if>
+    </update>
+
+    <update id="review">
+        update sold_goods
+        set review = #{score}
+        where order_id = #{orderId}
+        and goods_id = #{goodsId};
+
+        set @quantity = (select quantity
+        from sold_goods
+        where order_id = #{orderId}
+        and goods_id = #{goodsId});
+
+        <if test="score == 1">
+            update goods set pos_count = pos_count + @quantity where id = #{goodsId};
+        </if>
+
+        <if test="score == -1">
+            update goods set neg_count = neg_count + @quantity where id = #{goodsId};
+        </if>
+    </update>
 </mapper>
