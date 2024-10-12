@@ -47,6 +47,4 @@ public interface GoodsMapper {
     @Select("select * from goods " +
             "where user_id=#{userId}")
     List<Goods> list(Integer userId);
-
-    void decreaseQuantity(@Param("soldGoodsDetails") List<SoldGoodsDetailVo> soldGoodsDetails);
 }

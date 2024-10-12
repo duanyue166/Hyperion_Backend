@@ -90,4 +90,16 @@
             update goods set neg_count = neg_count + @quantity where id = #{goodsId};
         </if>
     </update>
+
+    <update id="decreaseQuantity">
+        update goods g join sold_goods s on g.id = s.goods_id
+        set g.quantity = g.quantity - s.quantity
+        where s.order_id = #{orderId}
+    </update>
+
+    <update id="increaseTotSales">
+        update goods g join sold_goods s on g.id = s.goods_id
+        set g.tot_sales = g.tot_sales + s.quantity
+        where s.order_id = #{orderId}
+    </update>
 </mapper>

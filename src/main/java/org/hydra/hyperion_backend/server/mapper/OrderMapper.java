@@ -27,4 +27,8 @@ public interface OrderMapper {
     List<OrderListItemVo> mList(int userId, String state);
 
     void review(Integer orderId, Integer goodsId, Integer score);
+
+    void decreaseQuantity(Integer orderId);
+
+    void increaseTotSales(Integer orderId);
 }

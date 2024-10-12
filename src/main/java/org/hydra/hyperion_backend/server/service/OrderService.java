@@ -28,10 +28,6 @@ public class OrderService {
     OrderMapper orderMapper;
     @Autowired
     AddressMapper addressMapper;
-    @Autowired
-    GoodsService goodsService;
-    @Autowired
-    private GoodsMapper goodsMapper;
 
     public Result add(Integer addrId, List<Integer> goodsIdList) {
         int userId = ThreadLocalUtil.get();
@@ -118,14 +114,21 @@ public class OrderService {
     }
 
     public Result ship(Integer orderId) {
-        //TODO: check goods quantity
+        try {
+            orderMapper.decreaseQuantity(orderId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Result.error("Goods quantity not enough");
+        }
+
         int userId = ThreadLocalUtil.get();
         orderMapper.updateState(userId, orderId, "SHIPPED");
         return Result.success();
     }
 
     public Result receive(Integer orderId) {
-        //TODO: update goods total sales
+        orderMapper.increaseTotSales(orderId);
+
         int userId = ThreadLocalUtil.get();
         orderMapper.updateState(userId, orderId, "COMPLETE");
         return Result.success();
