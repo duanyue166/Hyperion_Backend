@@ -2,6 +2,7 @@ package org.hydra.hyperion_backend.server.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.hydra.hyperion_backend.pojo.entity.Order;
+import org.hydra.hyperion_backend.pojo.vo.OrderDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.OrderListItemVo;
 import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-    List<SoldGoodsDetailVo> getSoldGoodsDetails(Integer userId, @Param("goodsIdList") List<Integer> goodsIdList);
+    List<SoldGoodsDetailVo> getTrolleyGoodsList(Integer userId, @Param("goodsIdList") List<Integer> goodsIdList);
 
     @Insert("insert into `order`(con_id, mer_id, state, payment, consignee, contact, address, create_time ,cover_url) " +
             "values(#{conId}, #{merId}, #{state}, #{payment}, #{consignee}, #{contact}, #{address}, now(),#{coverUrl});")
@@ -31,4 +32,13 @@ public interface OrderMapper {
     void decreaseQuantity(Integer orderId);
 
     void increaseTotSales(Integer orderId);
+
+    OrderDetailVo detail(int userId, Integer orderId);
+
+    @Select("select s.goods_id, s.quantity, o.mer_id, g.cover_url, s.unit_price, 1.0 as discount " +
+            "from `order` o " +
+            "   left join sold_goods s on o.id=s.order_id " +
+            "   left join goods g on s.goods_id=g.id " +
+            "where o.id = #{orderId}")
+    List<SoldGoodsDetailVo> getSoldGoodsList(Integer orderId);
 }

@@ -7,10 +7,10 @@ import org.hydra.hyperion_backend.pojo.PageBean;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.entity.Order;
 import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
+import org.hydra.hyperion_backend.pojo.vo.OrderDetailVo;
 import org.hydra.hyperion_backend.pojo.vo.OrderListItemVo;
 import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
 import org.hydra.hyperion_backend.server.mapper.AddressMapper;
-import org.hydra.hyperion_backend.server.mapper.GoodsMapper;
 import org.hydra.hyperion_backend.server.mapper.OrderMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class OrderService {
         String contact = addressDetail.getContact();
         String consignee = addressDetail.getConsignee();
 
-        List<SoldGoodsDetailVo> soldList = orderMapper.getSoldGoodsDetails(userId, goodsIdList);
+        List<SoldGoodsDetailVo> soldList = orderMapper.getTrolleyGoodsList(userId, goodsIdList);
         Map<Integer, List<SoldGoodsDetailVo>> groupedByMerId = soldList.stream()
                 .collect(Collectors.groupingBy(SoldGoodsDetailVo::getMerId));
 
@@ -137,5 +137,12 @@ public class OrderService {
     public Result review(Integer orderId, Integer goodsId, Integer score) {
         orderMapper.review(orderId, goodsId, score);
         return Result.success();
+    }
+
+    public Result detail(Integer orderId) {
+        int userId = ThreadLocalUtil.get();
+        OrderDetailVo orderDetail = orderMapper.detail(userId, orderId);
+        orderDetail.setGoodsList(orderMapper.getSoldGoodsList(orderId));
+        return Result.success(orderDetail);
     }
 }

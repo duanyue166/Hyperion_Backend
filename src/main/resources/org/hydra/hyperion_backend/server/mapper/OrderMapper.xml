@@ -11,24 +11,24 @@
         </foreach>
     </insert>
 
-    <select id="getSoldGoodsDetails" resultType="org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo">
-        select g.id      as goods_id,
-               t.quantity,
-               g.user_id as mer_id,
-               g.cover_url,
-               g.price,
-               g.discount
+    <select id="getTrolleyGoodsList" resultType="org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo">
+        select g.id as goods_id,
+        t.quantity,
+        g.user_id as mer_id,
+        g.cover_url,
+        g.price,
+        g.discount
         from trolley t
-                 join goods g
-                      on t.goods_id = g.id
+        join goods g
+        on t.goods_id = g.id
         where t.user_id = #{userId}
-          and g.state = 'ACTIVE'
-          and t.goods_id in
+        and g.state = 'ACTIVE'
+        and t.goods_id in
         <foreach collection="goodsIdList" item="goodsId" open="(" close=")" separator=",">
             #{goodsId}
         </foreach>
     </select>
-    
+
     <delete id="deleteTrolley">
         delete from trolley
         where user_id = #{userId}
@@ -102,4 +102,44 @@
         set g.tot_sales = g.tot_sales + s.quantity
         where s.order_id = #{orderId}
     </update>
+
+    <resultMap id="OrderDetailResultMap" type="org.hydra.hyperion_backend.pojo.vo.OrderDetailVo">
+        <id property="id" column="id"/>
+        <result property="payment" column="payment"/>
+        <result property="state" column="state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="completeTime" column="complete_time"/>
+        <result property="coverUrl" column="cover_url"/>
+
+        <association property="consumer" javaType="org.hydra.hyperion_backend.pojo.ConsumerInfo">
+            <id property="conId" column="con_id"/>
+            <result property="consignee" column="consignee"/>
+            <result property="address" column="address"/>
+            <result property="contact" column="contact"/>
+        </association>
+
+        <association property="merchant" javaType="org.hydra.hyperion_backend.pojo.MerchantInfo">
+            <id property="merId" column="mer_id"/>
+            <result property="name" column="mer_name"/>
+        </association>
+    </resultMap>
+
+    <select id="detail" resultMap="OrderDetailResultMap">
+        select o.id,
+               o.payment,
+               o.state,
+               o.create_time,
+               o.complete_time,
+               o.cover_url,
+               o.con_id,
+               o.consignee,
+               o.address,
+               o.contact,
+               o.mer_id,
+               m.name as mer_name
+        from `order` o
+                 left join user m on o.mer_id = m.id
+        where o.id = #{orderId}
+          and (o.con_id = #{userId} or o.mer_id = #{userId})
+    </select>
 </mapper>
