@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hydra.hyperion_backend.server.mapper.UserMapper">
+    <select id="list" resultType="org.hydra.hyperion_backend.pojo.entity.User">
+        select *
+        from user
+        where 1=1
+        <if test="state != null">
+            and state = #{state}
+        </if>
+        <if test="role != null">
+            and role = #{role}
+        </if>
+    </select>
+</mapper>

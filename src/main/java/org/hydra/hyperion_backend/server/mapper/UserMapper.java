@@ -8,6 +8,8 @@ import org.hydra.hyperion_backend.pojo.dto.UserChangeRequest;
 import org.hydra.hyperion_backend.pojo.dto.UserRegisterRequest;
 import org.hydra.hyperion_backend.pojo.entity.User;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     @Insert("insert into user (tel, name, pass, role, email, state) " +
@@ -26,4 +28,11 @@ public interface UserMapper {
             "set name=#{name}, tel=#{tel}, email=#{email} " +
             "where id=#{id}")
     void change(UserChangeRequest request);
+
+    List<User> list(String role, String state);
+
+    @Update("update user " +
+            "set state = 'DELETED' " +
+            "where id=#{id} ")
+    void delete(Integer id);
 }
