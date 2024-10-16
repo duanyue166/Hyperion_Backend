@@ -3,6 +3,7 @@ package org.hydra.hyperion_backend.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.hydra.hyperion_backend.annotation.ValidState;
+import org.hydra.hyperion_backend.util.AnnotationUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,6 +19,12 @@ public class StateValidator implements ConstraintValidator<ValidState, String> {
             Method method = constraintAnnotation.getClass().getMethod("states");
             var array = (String[]) method.invoke(constraintAnnotation);
             states = Arrays.asList(array);
+
+            AnnotationUtil.updateAnnotationValue(
+                    constraintAnnotation,
+                    "message",
+                    "只能是枚举常量" + Arrays.toString(array)
+            );
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }

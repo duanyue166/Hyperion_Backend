@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.FIELD})
 @Retention(RUNTIME)
 public @interface ValidState {
-    String message() default "invalid state";
+    String message() default "非法枚举常量";
 
     String[] states() default {};
 

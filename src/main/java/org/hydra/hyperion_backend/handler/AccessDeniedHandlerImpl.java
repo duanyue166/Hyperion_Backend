@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) {
-        response.setStatus(403);
+        throw accessDeniedException;
     }
 }
