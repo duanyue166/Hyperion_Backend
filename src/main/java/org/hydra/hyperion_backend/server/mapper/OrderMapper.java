@@ -41,4 +41,9 @@ public interface OrderMapper {
             "   left join goods g on s.goods_id=g.id " +
             "where o.id = #{orderId}")
     List<SoldGoodsDetailVo> getSoldGoodsList(Integer orderId);
+
+    @Select("select * " +
+            "from `order` " +
+            "where id = #{orderId}")
+    Order getById(Integer orderId);
 }

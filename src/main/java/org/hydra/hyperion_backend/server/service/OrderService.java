@@ -114,11 +114,17 @@ public class OrderService {
     }
 
     public Result ship(Integer orderId) {
+        Order order = orderMapper.getById(orderId);
+        if (order == null)
+            return Result.error("订单不存在");
+        if (!order.getState().equals("CONFIRMED"))
+            return Result.error("订单已完成发货或尚未支付");
+
         try {
             orderMapper.decreaseQuantity(orderId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return Result.error("Goods quantity not enough");
+            return Result.error("库存不足");
         }
 
         int userId = ThreadLocalUtil.get();

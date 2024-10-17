@@ -4,7 +4,6 @@ package org.hydra.hyperion_backend.server.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.dto.OrderAddRequest;
-import org.hydra.hyperion_backend.pojo.vo.OrderDetailVo;
 import org.hydra.hyperion_backend.server.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

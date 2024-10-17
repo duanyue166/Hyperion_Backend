@@ -4,6 +4,7 @@ import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.hydra.hyperion_backend.annotation.ValidRegexp;
 import org.hydra.hyperion_backend.annotation.ValidState;
 import org.hydra.hyperion_backend.pojo.Result;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
@@ -29,6 +30,11 @@ public class GlobalExceptionHandler {
         return Result.error(e.getMessage());
     }
 
+    @ExceptionHandler(MyBatisSystemException.class)
+    public Result handleMybatisException(MyBatisSystemException e) {
+        return Result.error(e.getCause().getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result handleValidationException(MethodArgumentNotValidException e) {
         try {
@@ -41,12 +47,11 @@ public class GlobalExceptionHandler {
             if (anno instanceof ValidState || anno instanceof ValidRegexp) {
                 Method messageMethod = anno.getClass().getMethod("message");
                 String errorMessage = (String) messageMethod.invoke(anno);
-                return Result.error(fieldName + "校验失败，" + errorMessage);
+                return Result.error(-101, fieldName + "校验失败，" +errorMessage);
             } else
-                return Result.error(fieldName + "校验失败");
+                return Result.error(-101, fieldName + "校验失败，" + e.getBindingResult().getFieldError().getDefaultMessage());
         } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
             throw new RuntimeException(ex);
         }
-
     }
 }
