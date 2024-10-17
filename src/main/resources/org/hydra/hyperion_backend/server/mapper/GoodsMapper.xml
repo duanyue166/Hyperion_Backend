@@ -7,8 +7,9 @@
     <select id="listAll" resultType="org.hydra.hyperion_backend.pojo.entity.Goods">
         select * from goods
         <where>
+            state='ACTIVE' and sale='ON'
             <if test="category!=null">
-                category like concat('%',#{category},'%')
+                and category like concat('%',#{category},'%')
             </if>
             <if test="keyword!=null">
                 and name like concat('%',#{keyword},'%')

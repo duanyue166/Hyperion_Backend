@@ -18,8 +18,8 @@ import java.util.Map;
 @Mapper
 public interface GoodsMapper {
 
-    @Insert("insert into goods (category, cover_url, `desc`, discount, name, price, quantity, user_id) " +
-            "values (#{category}, #{coverUrl}, #{desc}, #{discount}, #{name}, #{price}, #{quantity}, #{userId})")
+    @Insert("insert into goods (category, cover_url, `desc`, discount, name, price, quantity, user_id, sale) " +
+            "values (#{category}, #{coverUrl}, #{desc}, #{discount}, #{name}, #{price}, #{quantity}, #{userId},'ON')")
     void add(GoodsRequest request);
 
     @Select("select * from goods " +
