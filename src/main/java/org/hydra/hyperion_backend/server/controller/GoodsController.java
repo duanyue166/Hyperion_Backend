@@ -6,6 +6,7 @@ import org.hydra.hyperion_backend.pojo.dto.GoodsRequest;
 import org.hydra.hyperion_backend.pojo.entity.Goods;
 import org.hydra.hyperion_backend.server.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,27 +23,32 @@ public class GoodsController {
     GoodsService goodsService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result add(@RequestBody @Validated GoodsRequest request) {
         return goodsService.add(request);
     }
 
     @PutMapping("/onsale")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result onsale(Integer id) {
         return goodsService.setSale(id, "ON");
     }
 
     @PutMapping("/offsale")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result offsale(Integer id) {
         return goodsService.setSale(id, "OFF");
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result update(@RequestBody @Validated GoodsRequest request) {
         System.out.println(request);
         return goodsService.update(request);
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result delete(Integer id) {
         return goodsService.setState(id, "DELETED");
     }
@@ -63,6 +69,7 @@ public class GoodsController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('MERCHANT')")
     public Result list(
             Integer pageSize,
             Integer pageNum) {
