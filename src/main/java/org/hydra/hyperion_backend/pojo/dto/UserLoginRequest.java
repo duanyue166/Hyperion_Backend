@@ -13,6 +13,6 @@ public class UserLoginRequest {
     @NotNull
     String pass;
 
-    @ValidState(states = {"ADMIN", "CONSUMER", "MERCHANT"})
+    @ValidState(type = "role")
     String role;
 }

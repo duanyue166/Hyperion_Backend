@@ -13,9 +13,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.FIELD})
 @Retention(RUNTIME)
 public @interface ValidState {
-    String message() default "非法枚举常量";
+    String type();
 
-    String[] states() default {};
+    String message() default "非法枚举常量";
 
     Class<?>[] groups() default {};
 

@@ -7,6 +7,8 @@ import org.hydra.hyperion_backend.config.ValidatorConfig;
 import org.hydra.hyperion_backend.util.AnnotationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Field;
+
 public class RegexpValidator implements ConstraintValidator<ValidRegexp, String> {
     @Autowired
     ValidatorConfig config;
@@ -16,14 +18,15 @@ public class RegexpValidator implements ConstraintValidator<ValidRegexp, String>
     @Override
     public void initialize(ValidRegexp constraintAnno) {
         try {
-            var type = constraintAnno.type();
-            var field = config.getClass().getField(type);
-            var b = (ValidatorConfig.BaseValidator) field.get(config);
-            regexp = b.getRegexp();
+            String type = constraintAnno.type();
+            Field field = ValidatorConfig.ValidRegexp.class.getDeclaredField(type);
+            field.setAccessible(true);
+            var valid = (ValidatorConfig.ValidRegexp.Base) field.get(config.getValidRegexp());
+            regexp = valid.getRegexp();
             AnnotationUtil.updateAnnotationValue(
                     constraintAnno,
                     "message",
-                    b.getMessage()
+                    valid.getMessage()
             );
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);

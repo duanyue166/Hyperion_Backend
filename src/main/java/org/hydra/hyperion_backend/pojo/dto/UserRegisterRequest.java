@@ -7,16 +7,16 @@ import org.hydra.hyperion_backend.annotation.ValidState;
 
 @Data
 public class UserRegisterRequest {
-    @ValidRegexp(type = "tel",message = "invalid tel number")
+    @ValidRegexp(type = "tel", message = "invalid tel number")
     private String tel;
 
     @ValidRegexp(type = "username", message = "invalid username")
     private String name;
 
-//    @ValidRegexp(type = "password", message = "invalid password")
+    //    @ValidRegexp(type = "password", message = "invalid password")
     private String pass;
 
-    @ValidState(states = {"ADMIN", "CONSUMER", "MERCHANT"})
+    @ValidState(type = "role")
     private String role;
 
     @Email
