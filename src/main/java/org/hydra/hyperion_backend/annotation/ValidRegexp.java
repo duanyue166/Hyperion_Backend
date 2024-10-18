@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface ValidRegexp {
     String type();
 
-    String message() default "invalid";
+    String message() default "ValidRegexp: default message";
 
     Class<?>[] groups() default {};
 

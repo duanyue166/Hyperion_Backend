@@ -8,6 +8,7 @@ import org.hydra.hyperion_backend.pojo.entity.User;
 import org.hydra.hyperion_backend.server.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * description：
  */
 @Service
+@Transactional
 public class AdminService {
     @Autowired
     UserMapper userMapper;

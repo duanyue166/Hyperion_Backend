@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface ValidState {
     String type();
 
-    String message() default "非法枚举常量";
+    String message() default "ValidState: default message";
 
     Class<?>[] groups() default {};
 

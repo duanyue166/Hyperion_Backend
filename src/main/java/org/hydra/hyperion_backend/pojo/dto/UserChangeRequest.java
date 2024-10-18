@@ -18,10 +18,10 @@ import org.hydra.hyperion_backend.annotation.ValidRegexp;
 public class UserChangeRequest {
     Integer id;
     
-    @ValidRegexp(type = "username", message = "invalid username")
+    @ValidRegexp(type = "username")
     String name;
 
-    @ValidRegexp(type = "tel", message = "invalid tel number")
+    @ValidRegexp(type = "tel")
     String tel;
 
     @Email
