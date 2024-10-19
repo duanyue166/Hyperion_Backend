@@ -8,12 +8,9 @@ import lombok.Data;
 public class Goods {
 
     private long id;
-    @JsonIgnore
     private long userId;
     private String name;
-    @JsonIgnore
     private String state;
-    @JsonIgnore
     private String sale;
     private String coverUrl;
     private String desc;
