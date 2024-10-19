@@ -13,5 +13,8 @@
         <if test="role != null">
             and role = #{role}
         </if>
+        <if test="field != null and value != null">
+            and ${field} like concat('%', #{value}, '%')
+        </if>
     </select>
 </mapper>

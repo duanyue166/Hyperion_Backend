@@ -4,10 +4,7 @@ import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.server.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +25,11 @@ public class AdminController {
     }
 
     @GetMapping("/user/list")
-    public Result userList(Integer pageSize, Integer pageNum, String role, String state) {
-        return adminService.userList(pageSize, pageNum, role, state);
+    public Result userList(Integer pageSize,
+                           Integer pageNum,
+                           @RequestParam(required = false) String role,
+                           @RequestParam(required = false) String state,
+                           @RequestParam(required = false) String search) {
+        return adminService.userList(pageSize, pageNum, role, state, search);
     }
 }

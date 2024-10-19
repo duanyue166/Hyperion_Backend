@@ -28,12 +28,22 @@ public class AdminService {
         return Result.success();
     }
 
-    public Result userList(Integer pageSize,
-                           Integer pageNum,
-                           @RequestParam(required = false) String role,
-                           @RequestParam(required = false) String state) {
+    public Result userList(Integer pageSize, Integer pageNum,
+                           String role, String state, String search) {
+        String searchField = null;
+        String searchValue = null;
+        if (search != null) {
+            try {
+                String[] searchParts = search.split(":");
+                searchField = searchParts[0];
+                searchValue = searchParts[1];
+            } catch (Exception e) {
+                throw new RuntimeException("搜索字符串格式错误");
+            }
+        }
+
         PageHelper.startPage(pageNum, pageSize);
-        var page = (Page<User>) userMapper.list(role, state);
+        var page = (Page<User>) userMapper.list(role, state, searchField, searchValue);
         var pageBean = new PageBean<>(page.getTotal(), page.getResult());
         return Result.success(pageBean);
     }

@@ -29,7 +29,7 @@ public interface UserMapper {
             "where id=#{id}")
     void change(UserChangeRequest request);
 
-    List<User> list(String role, String state);
+    List<User> list(String role, String state, String field, String value);
 
     @Update("update user " +
             "set state = 'DELETED' " +
