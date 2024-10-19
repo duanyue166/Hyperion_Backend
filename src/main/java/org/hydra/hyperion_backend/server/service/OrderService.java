@@ -6,10 +6,7 @@ import com.github.pagehelper.PageHelper;
 import org.hydra.hyperion_backend.pojo.PageBean;
 import org.hydra.hyperion_backend.pojo.Result;
 import org.hydra.hyperion_backend.pojo.entity.Order;
-import org.hydra.hyperion_backend.pojo.vo.AddressDetailVo;
-import org.hydra.hyperion_backend.pojo.vo.OrderDetailVo;
-import org.hydra.hyperion_backend.pojo.vo.OrderListItemVo;
-import org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo;
+import org.hydra.hyperion_backend.pojo.vo.*;
 import org.hydra.hyperion_backend.server.mapper.AddressMapper;
 import org.hydra.hyperion_backend.server.mapper.OrderMapper;
 import org.hydra.hyperion_backend.util.ThreadLocalUtil;
@@ -108,8 +105,19 @@ public class OrderService {
     public Result mList(Integer pageSize, Integer pageNum, String state) {
         int userId = ThreadLocalUtil.get();
         PageHelper.startPage(pageNum, pageSize);
-        var page = (Page<OrderListItemVo>) orderMapper.mList(userId, state);
-        PageBean<OrderListItemVo> pageBean = new PageBean<>(page.getTotal(), page.getResult());
+        var page = (Page<OrderMerchantListItemVo>) orderMapper.mList(userId, state);
+        PageBean<OrderMerchantListItemVo> pageBean = new PageBean<>(page.getTotal(), page.getResult());
+        pageBean.getItems().forEach(order -> {
+            List<GoodsItemVo> items = orderMapper.getSoldGoodsList(order.getOrderId()).stream()
+                    .map(item -> GoodsItemVo.builder()
+                            .id(item.getGoodsId())
+                            .name(item.getName())
+                            .number(item.getQuantity())
+                            .singlePrice(item.getPrice())
+                            .build())
+                    .toList();
+            order.setItems(items);
+        });
         return Result.success(pageBean);
     }
 

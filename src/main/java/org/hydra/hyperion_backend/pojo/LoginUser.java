@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,7 +51,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        var res = List.of(new SimpleGrantedAuthority(user.getRole()));
+        ArrayList<SimpleGrantedAuthority> res = new ArrayList<>();
+        res.add(new SimpleGrantedAuthority(user.getRole()));
+        if (user.getRole().equals("ADMIN")) {
+            res.add(new SimpleGrantedAuthority("MERCHANT"));
+            res.add(new SimpleGrantedAuthority("CONSUMER"));
+        }
         System.out.println("getAuthorities@LoginUser res: " + res);
         return res;
     }

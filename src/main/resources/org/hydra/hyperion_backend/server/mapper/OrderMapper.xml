@@ -13,6 +13,7 @@
 
     <select id="getTrolleyGoodsList" resultType="org.hydra.hyperion_backend.pojo.vo.SoldGoodsDetailVo">
         select g.id as goods_id,
+        g.name,
         t.quantity,
         g.user_id as mer_id,
         g.cover_url,
@@ -47,8 +48,18 @@
         </if>
     </select>
 
-    <select id="mList" resultType="org.hydra.hyperion_backend.pojo.vo.OrderListItemVo">
-        select id, state, create_time, payment, cover_url
+    <select id="mList" resultType="org.hydra.hyperion_backend.pojo.vo.OrderMerchantListItemVo">
+        select id as orderId,
+        state,
+        (
+        select name
+        from user
+        where id = con_id
+        ) as user_name,
+        create_time,
+        complete_time,
+        consignee,
+        address
         from `order`
         where mer_id = #{userId}
         <if test="state != null">
