@@ -28,6 +28,5 @@ public class ValidatorTests {
 }
 
 class MyClass {
-    @ValidState(states = {"ACTIVE", "INACTIVE"})
     private String state;
 }
