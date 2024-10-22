@@ -108,12 +108,14 @@ public class OrderService {
         var page = (Page<OrderMerchantListItemVo>) orderMapper.mList(userId, state);
         PageBean<OrderMerchantListItemVo> pageBean = new PageBean<>(page.getTotal(), page.getResult());
         pageBean.getItems().forEach(order -> {
-            List<GoodsItemVo> items = orderMapper.getSoldGoodsList(order.getOrderId()).stream()
+            var res = orderMapper.getSoldGoodsList(order.getOrderId());
+            List<GoodsItemVo> items = res.stream()
                     .map(item -> GoodsItemVo.builder()
                             .id(item.getGoodsId())
                             .name(item.getName())
                             .number(item.getQuantity())
                             .singlePrice(item.getPrice())
+                            .coverUrl(item.getCoverUrl())
                             .build())
                     .toList();
             order.setItems(items);

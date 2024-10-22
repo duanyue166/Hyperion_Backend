@@ -36,7 +36,7 @@ public interface OrderMapper {
 
     OrderDetailVo detail(int userId, Integer orderId);
 
-    @Select("select s.goods_id, g.name, s.quantity, o.mer_id, g.cover_url, s.unit_price, 1.0 as discount " +
+    @Select("select s.goods_id, g.name, s.quantity, o.mer_id, g.cover_url, s.unit_price as price, 1.0 as discount " +
             "from `order` o " +
             "   left join sold_goods s on o.id=s.order_id " +
             "   left join goods g on s.goods_id=g.id " +
